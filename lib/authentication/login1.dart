@@ -91,7 +91,7 @@ class _login1State extends State<login1> {
                     decoration: BoxDecoration(
                         image: DecorationImage(
                             image: AssetImage(
-                                'assets/verify1__1_-removebg-preview.png')))),
+                                'verify1__1_-removebg-preview.png')))),
                 SizedBox(
                   height: 30,
                 ),
