@@ -32,10 +32,7 @@ class _splash_screenState extends State<splash_screen> {
             Container(
               height: 130,
               width: 120,
-              decoration: BoxDecoration(
-                  image: DecorationImage(
-                      image: AssetImage(''),
-                      fit: BoxFit.cover)),
+              child: Text("hello"),
             ),
             SpinKitPulse(
               color: Colors.blueGrey,

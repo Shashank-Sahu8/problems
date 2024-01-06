@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "525063110523",
+    "project_id": "project1power-4aef5",
+    "storage_bucket": "project1power-4aef5.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:525063110523:android:1d42387df3d31ca3a847de",
+        "android_client_info": {
+          "package_name": "com.example.project_power"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAQpB8uoepKkkbuHB0gAJ_pKPTWDGO_P0I"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
