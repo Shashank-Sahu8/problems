@@ -210,7 +210,7 @@ class _login1State extends State<login1> {
                           )
                         : Text(
                             "Send OTP",
-                            style: TextStyle(fontSize: 18),
+                            style: TextStyle(fontSize: 18, color: Colors.white),
                           ),
                   ),
                 ),
