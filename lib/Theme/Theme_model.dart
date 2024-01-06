@@ -24,3 +24,7 @@ class Themeclass {
         tertiary: Color(0xff633e9e)),
   );
 }
+
+//How to use-->
+// color: colors.green x
+// color: Theme.of(context).colorScheme.secondary

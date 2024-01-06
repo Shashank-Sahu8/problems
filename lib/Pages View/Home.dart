@@ -11,8 +11,11 @@ class _homeState extends State<home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(automaticallyImplyLeading: false,
-        actions: [IconButton(onPressed: (){}, icon: Icon(Icons.chat_bubble))],
+      backgroundColor: Theme.of(context).colorScheme.background,
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        backgroundColor: Theme.of(context).colorScheme.primary,
+        actions: [IconButton(onPressed: () {}, icon: Icon(Icons.chat_bubble))],
       ),
     );
   }
