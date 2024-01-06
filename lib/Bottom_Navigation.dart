@@ -1,6 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:project_power/Pages%20View/Claender.dart';
 import 'package:project_power/Pages%20View/Community.dart';
 import 'package:project_power/Pages%20View/Explore.dart';
 import 'package:project_power/Pages%20View/Profile.dart';

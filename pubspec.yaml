@@ -50,6 +50,8 @@ dependencies:
   fluttertoast: ^8.2.4
   pinput: ^3.0.1
   sign_in_button: ^3.2.0
+  flutter_local_notifications: ^16.1.0
+  theme_provider: ^0.6.0
 
 dev_dependencies:
   flutter_test:
