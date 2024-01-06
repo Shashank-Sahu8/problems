@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:pinput/pinput.dart';
 
-import '../home.dart';
+import '../Bottom_Navigation.dart';
 
 class verifyotp extends StatefulWidget {
   const verifyotp({super.key, required this.number, required this.otp});

@@ -10,6 +10,10 @@ class home extends StatefulWidget {
 class _homeState extends State<home> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold();
+    return Scaffold(
+      appBar: AppBar(automaticallyImplyLeading: false,
+        actions: [IconButton(onPressed: (){}, icon: Icon(Icons.chat_bubble))],
+      ),
+    );
   }
 }

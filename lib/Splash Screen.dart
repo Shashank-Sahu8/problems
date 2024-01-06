@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter/material.dart';
-import 'package:project_power/home.dart';
+import 'package:project_power/Bottom_Navigation.dart';
 
 import 'authentication/if_login.dart';
 
