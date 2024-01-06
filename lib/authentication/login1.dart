@@ -70,7 +70,7 @@ class _login1State extends State<login1> {
               width: 6,
             ),
             Image.asset(
-              'assets/WW iconimg.jpg',
+              '',
               height: 50,
             ),
           ],
@@ -91,7 +91,7 @@ class _login1State extends State<login1> {
                     decoration: BoxDecoration(
                         image: DecorationImage(
                             image: AssetImage(
-                                'verify1__1_-removebg-preview.png')))),
+                                'assets/verify1__1_-removebg-preview.png')))),
                 SizedBox(
                   height: 30,
                 ),

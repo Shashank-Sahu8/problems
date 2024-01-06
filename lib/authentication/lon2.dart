@@ -109,8 +109,10 @@ class _verifyotpState extends State<verifyotp> {
                       FirebaseAuth.instance
                           .signInWithCredential(credential)
                           .then((value) {
-                        Navigator.pushReplacement(context,
-                            MaterialPageRoute(builder: (context) => home()));
+                        Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => bottomnav()));
                       }).onError((error, stackTrace) {
                         Fluttertoast.showToast(
                             msg: error.toString(),

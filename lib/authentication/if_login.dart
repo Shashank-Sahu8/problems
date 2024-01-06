@@ -14,7 +14,7 @@ class islogein extends StatelessWidget {
         stream: FirebaseAuth.instance.authStateChanges(),
         builder: (context, snapshort) {
           if (snapshort.hasData) {
-            return home();
+            return bottomnav();
           } else {
             return login1();
           }

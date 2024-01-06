@@ -5,16 +5,18 @@ import 'package:project_power/Pages%20View/Community.dart';
 import 'package:project_power/Pages%20View/Explore.dart';
 import 'package:project_power/Pages%20View/Profile.dart';
 
-class home extends StatefulWidget {
-  const home({super.key});
+import 'Pages View/Home.dart';
+
+class bottomnav extends StatefulWidget {
+  const bottomnav({super.key});
 
   @override
-  State<home> createState() => _homeState();
+  State<bottomnav> createState() => _homeState();
 }
 
-const pageindex = [home(),explore(),community(),calender(),profile()];
+const pageindex = [home(), explore(), community(), calender(), profile()];
 
-class _homeState extends State<home> {
+class _homeState extends State<bottomnav> {
   int page = 0;
   @override
   Widget build(BuildContext context) {
@@ -29,10 +31,13 @@ class _homeState extends State<home> {
         },
         currentIndex: page,
         items: [
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: "Explore"),
-          BottomNavigationBarItem(icon: Icon(Icons.add), label: "Upload"),
+          BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
+          BottomNavigationBarItem(icon: Icon(Icons.add), label: "Explore"),
+          BottomNavigationBarItem(icon: Icon(Icons.account_circle), label: "Community"),
           BottomNavigationBarItem(
-              icon: Icon(Icons.account_circle), label: "User"),
+              icon: Icon(Icons.account_circle), label: "Calender"),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.account_circle), label: "Profile"),
         ],
       ),
       body: Center(
