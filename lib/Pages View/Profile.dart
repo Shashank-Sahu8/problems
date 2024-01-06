@@ -18,7 +18,7 @@ class _profileState extends State<profile> {
               onPressed: () {
                 FirebaseAuth.instance.signOut();
               },
-              icon: Icon(Icons.logout_outlined))
+              icon: Icon(Icons.logout_sharp))
         ],
       ),
     );
