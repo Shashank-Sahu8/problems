@@ -198,7 +198,8 @@ class _login1State extends State<login1> {
                       } else {
                         Fluttertoast.showToast(msg: "invalid number");
                       }
-                    },
+                    }, //age,height,weight,
+
                     style: ElevatedButton.styleFrom(
                         primary: Color(0xff00A36e),
                         shape: RoundedRectangleBorder(
