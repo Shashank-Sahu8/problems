@@ -22,7 +22,7 @@ class _homeState extends State<bottomnav> {
   Widget build(BuildContext context) {
     return Scaffold(
       bottomNavigationBar: BottomNavigationBar(
-        selectedItemColor: Color(0xff80A36e),
+        selectedItemColor: Color(0xff00A36e),
         type: BottomNavigationBarType.fixed,
         onTap: (index) {
           setState(() {
