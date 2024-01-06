@@ -3,6 +3,8 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter/material.dart';
 import 'package:project_power/home.dart';
 
+import 'authentication/if_login.dart';
+
 class splash_screen extends StatefulWidget {
   const splash_screen({super.key});
 
@@ -15,9 +17,9 @@ class _splash_screenState extends State<splash_screen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    Timer(Duration(seconds: 1), () {
+    Timer(Duration(seconds: 3), () {
       Navigator.pushReplacement(
-          context, MaterialPageRoute(builder: (context) => home()));
+          context, MaterialPageRoute(builder: (context) => islogein()));
     });
   }
 
