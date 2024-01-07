@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -19,6 +20,7 @@ class login1 extends StatefulWidget {
 }
 
 class _login1State extends State<login1> {
+  DatabaseReference ref = FirebaseDatabase.instance.ref().child('User');
   late StreamSubscription subscription;
   bool isDeviceConnected = false;
   bool isAlertSet = false;
