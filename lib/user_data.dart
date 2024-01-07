@@ -37,8 +37,11 @@ class _user_dataState extends State<user_data> {
                           .collection('data')
                           .doc(uid)
                           .update({'practitioner': true});
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) => pr_home()));
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  check_if_user_or_practitioner()));
                     },
                     child: Text(
                       "Practitioner",
@@ -53,11 +56,8 @@ class _user_dataState extends State<user_data> {
                 height: 50,
                 child: OutlinedButton(
                     onPressed: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) =>
-                                  check_if_user_or_practitioner()));
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) => bottomnav()));
                     },
                     child: Text(
                       "User",
