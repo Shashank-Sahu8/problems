@@ -1,8 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_switch/flutter_switch.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:icons_plus/icons_plus.dart';
+import 'package:project_power/authentication/loginemail.dart';
 import 'package:provider/provider.dart';
 
 import '../Theme/Theme.dart';
@@ -21,11 +23,15 @@ class _profileState extends State<profile> {
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.background,
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         backgroundColor: Theme.of(context).colorScheme.primary,
         actions: [
           IconButton(
               onPressed: () {
                 FirebaseAuth.instance.signOut();
+                Fluttertoast.showToast(
+                    msg: "log out", backgroundColor: Colors.grey);
+                Navigator.pop(context);
               },
               icon: Icon(Icons.logout_sharp))
         ],

@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:pinput/pinput.dart';
@@ -14,6 +15,7 @@ class verifyotp extends StatefulWidget {
 }
 
 class _verifyotpState extends State<verifyotp> {
+  DatabaseReference ref = FirebaseDatabase.instance.ref().child('User');
   final defaultPinTheme = PinTheme(
     width: 56,
     height: 56,
@@ -113,6 +115,23 @@ class _verifyotpState extends State<verifyotp> {
                             context,
                             MaterialPageRoute(
                                 builder: (context) => bottomnav()));
+                        ref
+                            .child(value.user!.uid.toString())
+                            .set({
+                              'uid': value.user!.uid.toString(),
+                              'phone': widget.number,
+                              'email': '',
+                              'username': '',
+                              'profile_pic': '',
+                              'expert_check': false,
+                              'permission': false
+                            })
+                            .then((value) {})
+                            .onError((error, stackTrace) {
+                              Fluttertoast.showToast(
+                                  msg: error.toString(),
+                                  backgroundColor: Colors.grey);
+                            });
                       }).onError((error, stackTrace) {
                         Fluttertoast.showToast(
                             msg: error.toString(),
