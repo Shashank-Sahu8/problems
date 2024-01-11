@@ -32,11 +32,11 @@ class _homeState extends State<bottomnav> {
         currentIndex: page,
         items: [
           BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
-          BottomNavigationBarItem(icon: Icon(Icons.add), label: "Explore"),
+          BottomNavigationBarItem(icon: Icon(Icons.search), label: "Explore"),
           BottomNavigationBarItem(
-              icon: Icon(Icons.account_circle), label: "Community"),
+              icon: Icon(Icons.groups_2), label: "Community"),
           BottomNavigationBarItem(
-              icon: Icon(Icons.account_circle), label: "Calender"),
+              icon: Icon(Icons.calendar_month), label: "Calender"),
           BottomNavigationBarItem(
               icon: Icon(Icons.account_circle), label: "Profile"),
         ],

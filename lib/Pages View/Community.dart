@@ -1,4 +1,9 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:project_power/Utils/comm_post.dart';
+import 'package:project_power/Utils/my_texfield.dart';
 
 class community extends StatefulWidget {
   const community({super.key});
@@ -7,9 +12,86 @@ class community extends StatefulWidget {
   State<community> createState() => _communityState();
 }
 
+final postController = TextEditingController();
+void postMessage() {
+  if (postController.text.isNotEmpty) {
+    FirebaseFirestore.instance.collection('Threads').add({
+      'userEmail': FirebaseAuth.instance.currentUser!.email,
+      'question': postController.text,
+      'Timestamp': Timestamp.now(),
+    });
+    postController.clear();
+  }
+}
+
 class _communityState extends State<community> {
+  final postController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold();
+    return SafeArea(
+      child: Scaffold(
+        body: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Text(
+                'Community',
+                style: TextStyle(fontSize: 24),
+              ),
+              SizedBox(
+                height: 900,
+                child: StreamBuilder(
+                  stream: FirebaseFirestore.instance
+                      .collection('Threads')
+                      .orderBy('Timestamp', descending: false)
+                      .snapshots(),
+                  builder: (context, snapshot) {
+                    if (snapshot.hasData) {
+                      return ListView.builder(
+                        shrinkWrap: true,
+                        itemCount: snapshot.data!.docs.length,
+                        itemBuilder: (context, index) {
+                          final thread = snapshot.data!.docs[index];
+                          return newCommunityPost(
+                            message: thread['question'],
+                            user: thread['userEmail'],
+                          );
+                        },
+                      );
+                    } else if (snapshot.hasError) {
+                      return Center(
+                        child: Text('Error'),
+                      );
+                    }
+                    return CircularProgressIndicator();
+                  },
+                ),
+              ),
+              Row(
+                children: [
+                  Expanded(
+                    child: myTextField(
+                      controller: postController,
+                      hintText: 'Add new Thread',
+                    ),
+                  ),
+                  IconButton(
+                    onPressed: () {
+                      postMessage();
+                      postController.clear(); // Clear text field after posting
+                    },
+                    icon: CircleAvatar(
+                      child: Icon(Icons.arrow_upward),
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
   }
 }
