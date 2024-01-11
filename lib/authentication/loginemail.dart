@@ -1,16 +1,20 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 import 'package:icons_plus/icons_plus.dart';
 import 'package:project_power/authentication/signupemail.dart';
-
+import 'package:project_power/authentication/verify_mail.dart';
 import 'forgetpasswordemail.dart';
+import 'if_login.dart';
+// final userRef = FirebaseFirestore.instance
+//     .collection('User')
+//     .doc('details')
+//     .collection('data')
+//     .doc(FirebaseAuth.instance.currentUser!.uid);
 
 class login extends StatefulWidget {
-  const login({super.key});
+  bool c;
+  login({super.key, required this.c});
 
   @override
   State<login> createState() => _loginState();
@@ -26,8 +30,16 @@ class _loginState extends State<login> {
   final _formfield = GlobalKey<FormState>();
   final emailcontroller = TextEditingController();
   final password = TextEditingController();
+  bool cc = false;
 
-  void login() async {
+  // checkuserforpractitioner() async {
+  //   userRef.get().then((DocumentSnapshot doc) {
+  //     print(doc.data());
+  //     return doc['practitioner'];
+  //   });
+  // }
+
+  void loginn() async {
     showDialog(
         context: context,
         builder: (context) {
@@ -42,8 +54,20 @@ class _loginState extends State<login> {
         .signInWithEmailAndPassword(
             email: emailcontroller.text, password: password.text.toString())
         .then((value) {
-      utils().toastmess("Login Successfully");
       Navigator.pop(context);
+      Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+              builder: (context) => verify_mail(
+                    checka: widget.c,
+                  )));
+      // checkuserforpractitioner();
+      // if (checkuserforpractitioner() == false && widget.c == true) {
+      //   FirebaseAuth.instance.signOut();
+      //   Fluttertoast.showToast(
+      //       msg: "you are not practitioner", backgroundColor: Colors.grey);
+      //   Navigator.pop(context);
+      // }
       utils().toastmess(value.user!.email.toString());
     }).onError((error, stackTrace) {
       Navigator.pop(context);
@@ -178,7 +202,7 @@ class _loginState extends State<login> {
                             borderRadius: BorderRadius.circular(30))),
                     onPressed: () {
                       if (_formfield.currentState!.validate()) {
-                        login();
+                        loginn();
                       }
                     },
                     child: Container(
@@ -205,8 +229,12 @@ class _loginState extends State<login> {
                   ),
                   TextButton(
                       onPressed: () {
-                        Navigator.push(context,
-                            MaterialPageRoute(builder: (context) => signup()));
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => signup(
+                                      check: widget.c,
+                                    )));
                       },
                       child: Text(
                         "Create account",

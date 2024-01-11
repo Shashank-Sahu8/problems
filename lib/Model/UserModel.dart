@@ -1,13 +1,15 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class UserModel {
   final String? id;
   final String name;
   final String email;
   final String phone;
   final String profile_pic;
-  final String practitioner;
-  final String check;
+  final bool practitioner;
+  final bool check;
 
-  const UserModel(
+  UserModel(
       {this.id,
       required this.email,
       required this.phone,
@@ -15,8 +17,10 @@ class UserModel {
       required this.check,
       required this.practitioner,
       required this.profile_pic});
-  toJson() {
+  //a->f
+  Map<String, dynamic> toJson() {
     return {
+      "id": id,
       "name": name,
       "email": email,
       "phone": phone,
@@ -24,5 +28,18 @@ class UserModel {
       "practitioner": practitioner,
       "check": check
     };
+  }
+
+  //f->a
+  static UserModel fromSnap(DocumentSnapshot snap) {
+    var snapshot = snap.data() as Map<String, dynamic>;
+    return UserModel(
+        id: snapshot['id'],
+        email: snapshot['email'],
+        phone: snapshot['phone'],
+        name: snapshot['name'],
+        check: snapshot['check'],
+        practitioner: snapshot['practitioner'],
+        profile_pic: snapshot['profile_pic']);
   }
 }

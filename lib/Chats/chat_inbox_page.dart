@@ -3,6 +3,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:project_power/Chats/Chat.dart';
 
+import 'ai_call1.dart';
+
 class ChatInboxPage extends StatefulWidget {
   const ChatInboxPage({Key? key}) : super(key: key);
 
@@ -23,6 +25,18 @@ class _ChatInboxPageState extends State<ChatInboxPage> {
               child: Text(
                 'Chats',
                 style: TextStyle(fontSize: 30),
+              ),
+            ),
+            GestureDetector(
+              onTap: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => aicall1()));
+              },
+              child: Padding(
+                padding: const EdgeInsets.only(top: 8, bottom: 8.0, left: 15),
+                child: Row(
+                  children: [Text("Medi Bot")],
+                ),
               ),
             ),
             _buildInbox(),
