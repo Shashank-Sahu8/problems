@@ -3,32 +3,35 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:icons_plus/icons_plus.dart';
+import 'package:project_power/Model/UserModel.dart';
+import 'package:project_power/authentication/verify_mail.dart';
+import 'if_login.dart';
 import 'loginemail.dart';
 
 class signup extends StatefulWidget {
-  const signup({super.key});
+  bool check;
+  signup({super.key, required this.check});
 
   @override
   State<signup> createState() => _signupState();
 }
 
 class _signupState extends State<signup> {
-  final db = FirebaseFirestore.instance;
   ad() async {
+    UserModel user = UserModel(
+        id: uid,
+        email: emailcontroller.text.toString(),
+        phone: '',
+        name: namecontroller.text.toString(),
+        check: false,
+        practitioner: widget.check,
+        profile_pic: '');
     await FirebaseFirestore.instance
         .collection('User')
         .doc('details')
         .collection('data')
         .doc(uid)
-        .set({
-      'id': uid,
-      'email': emailcontroller.text.toString(),
-      'name': namecontroller.text.toString(),
-      'phone': '',
-      'profile_pic': '',
-      'practitioner': false,
-      'check': false
-    });
+        .set(user.toJson());
   }
 
   final formfield = GlobalKey<FormState>();
@@ -188,7 +191,12 @@ class _signupState extends State<signup> {
                           utils().toastmess("Sign Up successfully");
                           ad();
                           Navigator.pop(context);
-                          Navigator.pop(context);
+                          Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => verify_mail(
+                                        checka: widget.check,
+                                      )));
                         }).onError((error, stackTrace) {
                           utils().toastmess(error.toString());
                           Navigator.pop(context);
@@ -227,8 +235,12 @@ class _signupState extends State<signup> {
                     ),
                     TextButton(
                         onPressed: () {
-                          Navigator.push(context,
-                              MaterialPageRoute(builder: (context) => login()));
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => login(
+                                        c: widget.check,
+                                      )));
                         },
                         child: Text(
                           "Login",
