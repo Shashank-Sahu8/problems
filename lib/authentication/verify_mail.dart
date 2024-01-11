@@ -1,14 +1,23 @@
 import 'dart:async';
-
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:project_power/Bottom_Navigation.dart';
+import 'package:project_power/authentication/check2.0.dart';
 import 'package:project_power/authentication/loginemail.dart';
+import 'package:project_power/pr_homepage.dart';
+import 'package:project_power/user_data.dart';
 
-import '../user_data.dart';
+final userRef = FirebaseFirestore.instance
+    .collection('User')
+    .doc('details')
+    .collection('data')
+    .doc(FirebaseAuth.instance.currentUser!.uid);
 
 class verify_mail extends StatefulWidget {
-  const verify_mail({super.key});
+  bool checka;
+  verify_mail({super.key, required this.checka});
 
   @override
   State<verify_mail> createState() => _verify_mailState();
@@ -22,13 +31,21 @@ class _verify_mailState extends State<verify_mail> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    //  checkuserforpermission();
     isvar = FirebaseAuth.instance.currentUser!.emailVerified;
-
+    checku();
     if (!isvar) {
       sendvar();
       timer = Timer.periodic(Duration(seconds: 3), (_) => checkemailverified());
     }
   }
+
+  // bool checkf = false;
+  // checkuserforpractitioner() async {
+  //   userRef.get().then((DocumentSnapshot doc) {
+  //     if (doc['check'] == true) return true;
+  //   });
+  // }
 
   @override
   void dispose() {
@@ -44,6 +61,21 @@ class _verify_mailState extends State<verify_mail> {
     });
 
     if (isvar) timer?.cancel();
+  }
+
+  bool permission = false;
+  Future checku() async {
+    userRef.get().then((DocumentSnapshot doc) {
+      print(doc.data());
+      if (widget.checka == false && doc['practitioner'] == true) {
+        FirebaseAuth.instance.signOut();
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => user_data()));
+        Fluttertoast.showToast(
+            msg:
+                "Sorry you can not enter as user fb  ${doc['practitioner']}  ${widget.checka} wid");
+      }
+    });
   }
 
   Future sendvar() async {
@@ -64,7 +96,9 @@ class _verify_mailState extends State<verify_mail> {
 
   @override
   Widget build(BuildContext context) => isvar == true
-      ? user_data()
+      ? widget.checka == false
+          ? bottomnav()
+          : checkcheck()
       : Scaffold(
           appBar: AppBar(
             title: Text('verify Email'),
@@ -86,7 +120,7 @@ class _verify_mailState extends State<verify_mail> {
                 icon: Icon(Icons.email_outlined),
                 label: Text(
                   'Resend Email',
-                  style: TextStyle(fontSize: 24),
+                  style: TextStyle(fontSize: 24, color: Colors.black),
                 ),
               ),
               SizedBox(
@@ -98,7 +132,7 @@ class _verify_mailState extends State<verify_mail> {
                   },
                   child: Text(
                     'Cnacel',
-                    style: TextStyle(fontSize: 24),
+                    style: TextStyle(fontSize: 24, color: Colors.black),
                   ))
             ],
           ),
