@@ -22,22 +22,27 @@ class _ChatInboxPageState extends State<ChatInboxPage> {
           children: [
             Padding(
               padding: const EdgeInsets.all(8.0),
-              child: Text(
-                'Chats',
-                style: TextStyle(fontSize: 30),
+              child: Row(
+                children: [
+                  IconButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      icon: Icon(Icons.arrow_back_ios)),
+                  Text(
+                    'Chats',
+                    style: TextStyle(fontSize: 30),
+                  ),
+                ],
               ),
             ),
-            GestureDetector(
+            ListTile(
               onTap: () {
                 Navigator.push(context,
                     MaterialPageRoute(builder: (context) => aicall1()));
               },
-              child: Padding(
-                padding: const EdgeInsets.only(top: 8, bottom: 8.0, left: 15),
-                child: Row(
-                  children: [Text("Medi Bot")],
-                ),
-              ),
+              title: Text('Medi bot'),
+              trailing: Icon(Icons.wb_incandescent_rounded),
             ),
             _buildInbox(),
           ],

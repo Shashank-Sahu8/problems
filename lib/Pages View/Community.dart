@@ -13,36 +13,31 @@ class community extends StatefulWidget {
 }
 
 final postController = TextEditingController();
-void postMessage() {
-  if (postController.text.isNotEmpty) {
-    FirebaseFirestore.instance.collection('Threads').add({
-      'userEmail': FirebaseAuth.instance.currentUser!.email,
-      'question': postController.text,
-      'Timestamp': Timestamp.now(),
-    });
-    postController.clear();
-  }
+void postMessage() async {
+  await FirebaseFirestore.instance.collection('Threads').add({
+    'userEmail': FirebaseAuth.instance.currentUser!.email,
+    'question': postController.text.toString(),
+    'Timestamp': Timestamp.now(),
+    'likes': [],
+  });
 }
 
 class _communityState extends State<community> {
-  final postController = TextEditingController();
-
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
         body: Padding(
           padding: const EdgeInsets.all(8.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Text(
-                'Community',
-                style: TextStyle(fontSize: 24),
-              ),
-              SizedBox(
-                height: 900,
-                child: StreamBuilder(
+          child: Expanded(
+            child: Column(
+              // crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Text(
+                  'Community',
+                  style: TextStyle(fontSize: 24),
+                ),
+                StreamBuilder<QuerySnapshot>(
                   stream: FirebaseFirestore.instance
                       .collection('Threads')
                       .orderBy('Timestamp', descending: false)
@@ -57,6 +52,8 @@ class _communityState extends State<community> {
                           return newCommunityPost(
                             message: thread['question'],
                             user: thread['userEmail'],
+                            postId: thread.id,
+                            likes: List<String>.from(thread['Likes']),
                           );
                         },
                       );
@@ -68,27 +65,31 @@ class _communityState extends State<community> {
                     return CircularProgressIndicator();
                   },
                 ),
-              ),
-              Row(
-                children: [
-                  Expanded(
-                    child: myTextField(
-                      controller: postController,
-                      hintText: 'Add new Thread',
-                    ),
+                Positioned(
+                  bottom: 100,
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: myTextField(
+                          controller: postController,
+                          hintText: 'Add new Thread',
+                        ),
+                      ),
+                      IconButton(
+                        onPressed: () {
+                          postMessage();
+                          postController.clear();
+                          // Clear text field after posting
+                        },
+                        icon: CircleAvatar(
+                          child: Icon(Icons.arrow_upward),
+                        ),
+                      ),
+                    ],
                   ),
-                  IconButton(
-                    onPressed: () {
-                      postMessage();
-                      postController.clear(); // Clear text field after posting
-                    },
-                    icon: CircleAvatar(
-                      child: Icon(Icons.arrow_upward),
-                    ),
-                  ),
-                ],
-              ),
-            ],
+                ),
+              ],
+            ),
           ),
         ),
       ),

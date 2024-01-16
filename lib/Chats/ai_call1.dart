@@ -12,6 +12,9 @@ class aicall1 extends StatelessWidget {
     RxString result = ''.obs;
     return SafeArea(
         child: Scaffold(
+      appBar: AppBar(
+        title: Text('AI Bot'),
+      ),
       backgroundColor: Colors.white,
       body: Container(
         padding: const EdgeInsets.all(20),
@@ -21,6 +24,11 @@ class aicall1 extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               TextField(
+                decoration: InputDecoration(
+                    hintText: 'Type your question here',
+                    border: OutlineInputBorder(
+                        borderSide: BorderSide(width: 1),
+                        borderRadius: BorderRadius.circular(8))),
                 keyboardType: TextInputType.text,
                 controller: textController,
               ),
@@ -36,9 +44,15 @@ class aicall1 extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 20),
-              Obx(() => Text(
-                    result.value,
-                    style: const TextStyle(color: Colors.black),
+              Obx(() => Card(
+                    color: Colors.grey[600],
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(
+                        result.value,
+                        style: const TextStyle(color: Colors.black),
+                      ),
+                    ),
                   )),
             ],
           ),

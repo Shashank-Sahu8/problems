@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -25,6 +26,25 @@ class _chat_pageState extends State<chat_page> {
           widget.recieverUserId, _messageController.text);
 
       _messageController.clear();
+    }
+  }
+
+  Future<void> pickFile() async {
+    try {
+      FilePickerResult? result = await FilePicker.platform.pickFiles();
+
+      if (result != null) {
+        PlatformFile file = result.files.first;
+
+        // Use the file (for example, print its path)
+        print('File picked: ${file.path}');
+      } else {
+        // User canceled the picker
+        print('User canceled the file picker.');
+      }
+    } catch (e) {
+      // Handle any errors that might occur during file picking
+      print('Error picking file: $e');
     }
   }
 
@@ -125,6 +145,15 @@ class _chat_pageState extends State<chat_page> {
               decoration: InputDecoration(hintText: 'Type your message'),
               controller: _messageController,
             ),
+          ),
+          IconButton(
+            onPressed: () {
+              pickFile();
+            },
+            icon: const Icon(Icons.attach_file),
+          ),
+          SizedBox(
+            width: 5,
           ),
           IconButton(
               onPressed: () {
