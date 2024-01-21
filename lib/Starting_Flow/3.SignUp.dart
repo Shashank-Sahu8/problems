@@ -6,6 +6,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:icons_plus/icons_plus.dart';
 import 'package:msh_checkbox/msh_checkbox.dart';
 import 'package:project_power/Model/UserModel.dart';
+import 'package:project_power/Starting_Flow/3.ii.%20Practitioner_Details.dart';
 import '../Auth_Files/google sign_in.dart';
 import '3.i.Personal_Details.dart';
 import '4.Login.dart';
@@ -19,23 +20,6 @@ class signup extends StatefulWidget {
 }
 
 class _signupState extends State<signup> {
-  addfire() async {
-    UserModel user = UserModel(
-        id: FirebaseAuth.instance.currentUser!.uid,
-        email: emailcontroller.text.toString(),
-        phone: '',
-        name: namecontroller.text.toString(),
-        check: false,
-        practitioner: widget.check,
-        profile_pic: '');
-    await FirebaseFirestore.instance
-        .collection('User')
-        .doc('details')
-        .collection('data')
-        .doc(uid)
-        .set(user.toJson());
-  }
-
   final formfield = GlobalKey<FormState>();
   final emailcontroller = TextEditingController();
   final passwordcontroller = TextEditingController();
@@ -84,17 +68,21 @@ class _signupState extends State<signup> {
             padding: const EdgeInsets.all(8.0),
             child: Column(
               children: [
-                CircleAvatar(
-                  backgroundColor: Color(0xffAD00FF),
-                  radius: 35,
-                  child: CircleAvatar(
-                      radius: 33,
-                      backgroundColor: Colors.white,
-                      child: CircleAvatar(
-                        radius: 30.5,
-                        backgroundColor: Colors.grey,
-                      )),
+                Image.asset(
+                  'assets/power1.png',
+                  height: 40,
                 ),
+                // CircleAvatar(
+                //   backgroundColor: Color(0xffAD00FF),
+                //   radius: 35,
+                //   child: CircleAvatar(
+                //       radius: 33,
+                //       backgroundColor: Colors.white,
+                //       child: CircleAvatar(
+                //         radius: 30.5,
+                //         backgroundColor: Colors.grey,
+                //       )),
+                // ),
                 SizedBox(
                   height: 22,
                 ),
@@ -119,11 +107,6 @@ class _signupState extends State<signup> {
                           validator: (value) {
                             if (value!.length == 0) {
                               return "Email cannot be empty";
-                            }
-                            if (!RegExp(
-                                    "^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+.[a-z]")
-                                .hasMatch(value)) {
-                              return ("Please enter a valid email");
                             } else {
                               return null;
                             }
@@ -148,10 +131,16 @@ class _signupState extends State<signup> {
                                     BorderRadius.all(Radius.circular(12.0))),
                           ),
                           validator: (value) {
-                            if (value!.isEmpty) {
-                              return 'Enter email';
+                            if (value!.length == 0) {
+                              return "Email cannot be empty";
                             }
-                            return null;
+                            if (!RegExp(
+                                    "^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+.[a-z]")
+                                .hasMatch(value)) {
+                              return ("Please enter a valid email");
+                            } else {
+                              return null;
+                            }
                           },
                         ),
                         SizedBox(
@@ -259,50 +248,27 @@ class _signupState extends State<signup> {
                           width: double.infinity,
                           child: ElevatedButton(
                             onPressed: () {
-                              // Navigator.push(
-                              //     context,
-                              //     MaterialPageRoute(
-                              //         builder: (context) => presonal_details(
-                              //               email: emailcontroller.text,
-                              //               password: passwordcontroller.text,
-                              //               name: namecontroller.text,
-                              //             )));
-                              if (isChecked == false) {
-                                Fluttertoast.showToast(
-                                  msg: "Please accept the Privacy Policy",
-                                  backgroundColor: Colors.grey,
-                                  textColor: Color(0xff7F3DFF),
-                                );
+                              if (widget.check == false) {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => presonal_details(
+                                              email: emailcontroller.text,
+                                              password: passwordcontroller.text,
+                                              name: namecontroller.text,
+                                              google: false,
+                                            )));
                               } else {
-                                if (formfield.currentState!.validate()) {
-                                  showDialog(
-                                      context: context,
-                                      builder: (context) {
-                                        return const Center(
-                                          child: CircularProgressIndicator(),
-                                        );
-                                      });
-                                  FirebaseAuth.instance
-                                      .createUserWithEmailAndPassword(
-                                          email:
-                                              emailcontroller.text.toString(),
-                                          password: passwordcontroller.text
-                                              .toString())
-                                      .then((value) {
-                                    Fluttertoast.showToast(
-                                        msg: "Account created & Login success",
-                                        backgroundColor: Colors.grey,
-                                        textColor: Color(0xff7F3DFF));
-                                    addfire();
-                                    Navigator.pop(context);
-                                    Navigator.pop(context);
-                                  }).onError((error, stackTrace) {
-                                    Fluttertoast.showToast(
-                                        msg: error.toString(),
-                                        backgroundColor: Colors.grey,
-                                        textColor: Color(0xff7F3DFF));
-                                  });
-                                }
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            practitioner_details(
+                                              email: emailcontroller.text,
+                                              password: passwordcontroller.text,
+                                              name: namecontroller.text,
+                                              google: false,
+                                            )));
                               }
                             },
                             child: Text(
@@ -343,14 +309,41 @@ class _signupState extends State<signup> {
                                       child: CircularProgressIndicator(),
                                     );
                                   });
-                              await AuthServices().signInWithGoogle();
-                              addfire();
-                              Navigator.pop(context);
-                              Fluttertoast.showToast(
-                                msg: 'Login success',
-                                backgroundColor: Colors.grey,
-                                textColor: Color(0xff7F3DFF),
-                              );
+                              var res = await AuthServices().signInWithGoogle();
+                              if (res.additionalUserInfo!.isNewUser) {
+                                if (widget.check == false) {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              presonal_details(
+                                                email: emailcontroller.text,
+                                                password:
+                                                    passwordcontroller.text,
+                                                name: namecontroller.text,
+                                                google: true,
+                                              )));
+                                } else {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              practitioner_details(
+                                                email: emailcontroller.text,
+                                                password:
+                                                    passwordcontroller.text,
+                                                name: namecontroller.text,
+                                                google: true,
+                                              )));
+                                }
+                              } else {
+                                Navigator.pop(context);
+                                Fluttertoast.showToast(
+                                  msg: 'Login success',
+                                  backgroundColor: Colors.grey,
+                                  textColor: Color(0xff7F3DFF),
+                                );
+                              }
                             },
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,

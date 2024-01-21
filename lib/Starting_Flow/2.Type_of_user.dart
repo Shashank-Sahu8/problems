@@ -22,42 +22,52 @@ class _user_dataState extends State<user_data> {
       body: SafeArea(
         child: Container(
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              SizedBox(
-                width: 200,
-                height: 50,
-                child: OutlinedButton(
-                    style: OutlinedButton.styleFrom(),
-                    onPressed: () async {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => signup(check: true)));
-                    },
-                    child: Text(
-                      "Practitioner",
-                      style: TextStyle(color: Colors.black),
-                    )),
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  SizedBox(
+                    width: 200,
+                    height: 50,
+                    child: OutlinedButton(
+                        onPressed: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => signup(check: false)));
+                        },
+                        child: Text(
+                          "User",
+                          style: TextStyle(color: Colors.black),
+                        )),
+                  ),
+                ],
               ),
               SizedBox(
                 height: 25,
               ),
-              SizedBox(
-                width: 200,
-                height: 50,
-                child: OutlinedButton(
-                    onPressed: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => signup(check: false)));
-                    },
-                    child: Text(
-                      "User",
-                      style: TextStyle(color: Colors.black),
-                    )),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  SizedBox(
+                    width: 200,
+                    height: 50,
+                    child: OutlinedButton(
+                        style: OutlinedButton.styleFrom(),
+                        onPressed: () async {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => signup(check: true)));
+                        },
+                        child: Text(
+                          "Practitioner",
+                          style: TextStyle(color: Colors.black),
+                        )),
+                  ),
+                ],
               ),
             ],
           ),

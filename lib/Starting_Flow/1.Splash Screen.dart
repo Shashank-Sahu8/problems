@@ -30,10 +30,9 @@ class _splash_screenState extends State<splash_screen> {
         child: Stack(
           alignment: Alignment.center,
           children: [
-            Container(
-              height: 130,
-              width: 120,
-              child: Text("hello"),
+            Image.asset(
+              'assets/power1.png',
+              height: 200,
             ),
             SpinKitPulse(
               color: Colors.blueGrey,
