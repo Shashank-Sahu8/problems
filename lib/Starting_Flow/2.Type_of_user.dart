@@ -1,18 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
-import 'package:project_power/Bottom_Navigation.dart';
-import 'package:project_power/authentication/loginemail.dart';
-import 'package:project_power/practitioner_section.dart';
-
-import 'check.dart';
-
-final userRef = FirebaseFirestore.instance
-    .collection('User')
-    .doc('details')
-    .collection('data')
-    .doc(FirebaseAuth.instance.currentUser!.uid);
+import '3.SignUp.dart';
 
 class user_data extends StatefulWidget {
   const user_data({super.key});
@@ -42,17 +31,10 @@ class _user_dataState extends State<user_data> {
                 child: OutlinedButton(
                     style: OutlinedButton.styleFrom(),
                     onPressed: () async {
-                      // await FirebaseFirestore.instance
-                      //     .collection('User')
-                      //     .doc('details')
-                      //     .collection('data')
-                      //     .doc(uid)
-                      //     .update({'practitioner': true});
-                      // print("yes");
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => login(c: true)));
+                              builder: (context) => signup(check: true)));
                     },
                     child: Text(
                       "Practitioner",
@@ -70,7 +52,7 @@ class _user_dataState extends State<user_data> {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => login(c: false)));
+                              builder: (context) => signup(check: false)));
                     },
                     child: Text(
                       "User",

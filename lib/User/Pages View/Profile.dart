@@ -6,7 +6,8 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:icons_plus/icons_plus.dart';
 import 'package:provider/provider.dart';
 
-import '../Theme/Theme.dart';
+import '../../Theme/Theme.dart';
+
 
 class profile extends StatefulWidget {
   const profile({super.key});
@@ -28,7 +29,6 @@ class _profileState extends State<profile> {
           IconButton(
               onPressed: () {
                 FirebaseAuth.instance.signOut();
-                Navigator.pop(context);
                 Fluttertoast.showToast(
                     msg: "log out", backgroundColor: Colors.grey);
               },
