@@ -3,7 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:project_power/Chats/model/messages_model.dart';
+import 'package:project_power/Model/messages_model.dart';
 
 class ChatService extends ChangeNotifier {
   final _firebaseAuth = FirebaseAuth.instance;

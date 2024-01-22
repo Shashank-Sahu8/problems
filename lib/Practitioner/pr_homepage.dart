@@ -3,6 +3,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
+import '../Starting_Flow/8.If_Login_Or_not.dart';
+
 class pr_homepage extends StatefulWidget {
   const pr_homepage({super.key});
 
@@ -20,9 +22,10 @@ class _pr_homepageState extends State<pr_homepage> {
           IconButton(
               onPressed: () {
                 FirebaseAuth.instance.signOut();
+                Navigator.pushReplacement(context,
+                    MaterialPageRoute(builder: (context) => islogein()));
                 Fluttertoast.showToast(
                     msg: "log out", backgroundColor: Colors.grey);
-                Navigator.pop(context);
               },
               icon: Icon(Icons.logout_sharp))
         ],

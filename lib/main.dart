@@ -1,10 +1,10 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:project_power/user_data.dart';
+import 'package:project_power/Starting_Flow/2.Type_of_user.dart';
 import 'package:provider/provider.dart';
-import 'Splash Screen.dart';
+import 'Auth_Files/firebase_options.dart';
+import 'Starting_Flow/1.Splash Screen.dart';
 import 'Theme/Theme.dart';
-import 'authentication/firebase_options.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();

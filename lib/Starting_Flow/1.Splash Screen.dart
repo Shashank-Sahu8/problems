@@ -1,10 +1,8 @@
 import 'dart:async';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter/material.dart';
-import 'package:project_power/Bottom_Navigation.dart';
-import 'package:project_power/user_data.dart';
 
-import 'authentication/if_login.dart';
+import '8.If_Login_Or_not.dart';
 
 class splash_screen extends StatefulWidget {
   const splash_screen({super.key});
@@ -32,10 +30,9 @@ class _splash_screenState extends State<splash_screen> {
         child: Stack(
           alignment: Alignment.center,
           children: [
-            Container(
-              height: 130,
-              width: 120,
-              child: Text("hello"),
+            Image.asset(
+              'assets/power1.png',
+              height: 200,
             ),
             SpinKitPulse(
               color: Colors.blueGrey,

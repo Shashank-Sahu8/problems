@@ -3,10 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_switch/flutter_switch.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:icons_plus/icons_plus.dart';
 import 'package:provider/provider.dart';
 
-import '../Theme/Theme.dart';
+import '../../Starting_Flow/8.If_Login_Or_not.dart';
+import '../../Theme/Theme.dart';
 
 class profile extends StatefulWidget {
   const profile({super.key});
@@ -26,9 +28,14 @@ class _profileState extends State<profile> {
         backgroundColor: Theme.of(context).colorScheme.primary,
         actions: [
           IconButton(
-              onPressed: () {
+              onPressed: () async {
+                final googleCurrentUser =
+                    GoogleSignIn().currentUser ?? await GoogleSignIn().signIn();
+                if (googleCurrentUser != null)
+                  await GoogleSignIn().disconnect();
                 FirebaseAuth.instance.signOut();
-                Navigator.pop(context);
+                Navigator.pushReplacement(context,
+                    MaterialPageRoute(builder: (context) => islogein()));
                 Fluttertoast.showToast(
                     msg: "log out", backgroundColor: Colors.grey);
               },

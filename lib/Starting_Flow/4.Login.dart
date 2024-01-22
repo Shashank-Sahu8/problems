@@ -2,19 +2,12 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:icons_plus/icons_plus.dart';
-import 'package:project_power/authentication/signupemail.dart';
-import 'package:project_power/authentication/verify_mail.dart';
-import 'forgetpasswordemail.dart';
-import 'if_login.dart';
-// final userRef = FirebaseFirestore.instance
-//     .collection('User')
-//     .doc('details')
-//     .collection('data')
-//     .doc(FirebaseAuth.instance.currentUser!.uid);
+import 'package:project_power/Starting_Flow/3.SignUp.dart';
+import 'package:project_power/Starting_Flow/6.Verify_Mail.dart';
+import '5.Forget_Password.dart';
 
 class login extends StatefulWidget {
-  bool c;
-  login({super.key, required this.c});
+  const login({super.key});
 
   @override
   State<login> createState() => _loginState();
@@ -32,13 +25,6 @@ class _loginState extends State<login> {
   final password = TextEditingController();
   bool cc = false;
 
-  // checkuserforpractitioner() async {
-  //   userRef.get().then((DocumentSnapshot doc) {
-  //     print(doc.data());
-  //     return doc['practitioner'];
-  //   });
-  // }
-
   void loginn() async {
     showDialog(
         context: context,
@@ -54,24 +40,11 @@ class _loginState extends State<login> {
         .signInWithEmailAndPassword(
             email: emailcontroller.text, password: password.text.toString())
         .then((value) {
-      Navigator.pop(context);
       Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-              builder: (context) => verify_mail(
-                    checka: widget.c,
-                  )));
-      // checkuserforpractitioner();
-      // if (checkuserforpractitioner() == false && widget.c == true) {
-      //   FirebaseAuth.instance.signOut();
-      //   Fluttertoast.showToast(
-      //       msg: "you are not practitioner", backgroundColor: Colors.grey);
-      //   Navigator.pop(context);
-      // }
+          context, MaterialPageRoute(builder: (context) => verify_mail()));
       utils().toastmess(value.user!.email.toString());
     }).onError((error, stackTrace) {
       Navigator.pop(context);
-      debugPrint(error.toString());
       utils().toastmess(error.toString());
     });
   }
@@ -128,10 +101,16 @@ class _loginState extends State<login> {
                                 color: Colors.blueGrey,
                               )),
                           validator: (value) {
-                            if (value!.isEmpty) {
-                              return 'Enter email';
+                            if (value!.length == 0) {
+                              return "Email cannot be empty";
                             }
-                            return null;
+                            if (!RegExp(
+                                "^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+.[a-z]")
+                                .hasMatch(value)) {
+                              return ("Please enter a valid email");
+                            } else {
+                              return null;
+                            }
                           },
                         ),
                         SizedBox(
@@ -229,12 +208,7 @@ class _loginState extends State<login> {
                   ),
                   TextButton(
                       onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => signup(
-                                      check: widget.c,
-                                    )));
+                        Navigator.pop(context);
                       },
                       child: Text(
                         "Create account",

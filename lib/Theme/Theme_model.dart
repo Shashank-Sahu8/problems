@@ -6,7 +6,7 @@ class Themeclass {
     brightness: Brightness.light,
     colorScheme: ColorScheme.light(
         background: CupertinoColors.white,
-        primary: Colors.white38,
+        primary: Color(0xff7F3DFF),
         onPrimaryContainer: Colors.black, //text color
         secondary: Colors.grey.shade100,
         onSecondaryContainer: Color(0xff8f8f8e), //second text
