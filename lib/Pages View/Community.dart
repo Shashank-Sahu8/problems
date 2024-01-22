@@ -30,44 +30,15 @@ class _communityState extends State<community> {
         body: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Expanded(
-            child: Column(
-              // crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                Text(
-                  'Community',
-                  style: TextStyle(fontSize: 24),
-                ),
-                StreamBuilder<QuerySnapshot>(
-                  stream: FirebaseFirestore.instance
-                      .collection('Threads')
-                      .orderBy('Timestamp', descending: false)
-                      .snapshots(),
-                  builder: (context, snapshot) {
-                    if (snapshot.hasData) {
-                      return ListView.builder(
-                        shrinkWrap: true,
-                        itemCount: snapshot.data!.docs.length,
-                        itemBuilder: (context, index) {
-                          final thread = snapshot.data!.docs[index];
-                          return newCommunityPost(
-                            message: thread['question'],
-                            user: thread['userEmail'],
-                            postId: thread.id,
-                            likes: List<String>.from(thread['Likes']),
-                          );
-                        },
-                      );
-                    } else if (snapshot.hasError) {
-                      return Center(
-                        child: Text('Error'),
-                      );
-                    }
-                    return CircularProgressIndicator();
-                  },
-                ),
-                Positioned(
-                  bottom: 100,
-                  child: Row(
+            child: SingleChildScrollView(
+              child: Column(
+                // crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Text(
+                    'Community',
+                    style: TextStyle(fontSize: 24),
+                  ),
+                  Row(
                     children: [
                       Expanded(
                         child: myTextField(
@@ -87,8 +58,36 @@ class _communityState extends State<community> {
                       ),
                     ],
                   ),
-                ),
-              ],
+                  StreamBuilder<QuerySnapshot>(
+                    stream: FirebaseFirestore.instance
+                        .collection('Threads')
+                        .orderBy('Timestamp', descending: true)
+                        .snapshots(),
+                    builder: (context, snapshot) {
+                      if (snapshot.hasData) {
+                        return ListView.builder(
+                          shrinkWrap: true,
+                          itemCount: snapshot.data!.docs.length,
+                          itemBuilder: (context, index) {
+                            final thread = snapshot.data!.docs[index];
+                            return newCommunityPost(
+                              message: thread['question'],
+                              user: thread['userEmail'],
+                              postId: thread.id,
+                              likes: List<String>.from(thread['likes'] ?? []),
+                            );
+                          },
+                        );
+                      } else if (snapshot.hasError) {
+                        return Center(
+                          child: Text('Error'),
+                        );
+                      }
+                      return CircularProgressIndicator();
+                    },
+                  ),
+                ],
+              ),
             ),
           ),
         ),
