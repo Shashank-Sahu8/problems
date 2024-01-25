@@ -32,11 +32,15 @@ class _presonal_detailsState extends State<presonal_details> {
         .set({
       'id': FirebaseAuth.instance.currentUser!.uid,
       'name': widget.name,
-      'dob': selectedDate,
+      'year': selectedDate?.year,
+      'month': selectedDate?.month,
+      'date': selectedDate?.day,
       'height': heightc.text,
       'weight': weightc.text,
       'condition': conditionc.text,
-      'email': widget.email,
+      'email': widget.google == true
+          ? FirebaseAuth.instance.currentUser!.email
+          : widget.email,
       'check': false,
       'practitioner': false,
     });

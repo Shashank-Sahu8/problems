@@ -1,11 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:country_state_picker_plus/country_state_picker_plus.dart';
-import 'package:datetime_picker_field_platform/datetime_picker_field_platform.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
-
 import '8.If_Login_Or_not.dart';
 
 class practitioner_details extends StatefulWidget {
@@ -37,7 +35,9 @@ class _practitioner_detailsState extends State<practitioner_details> {
         .set({
       'id': FirebaseAuth.instance.currentUser!.uid,
       'name': widget.name,
-      'email': widget.email,
+      'email': widget.google == true
+          ? FirebaseAuth.instance.currentUser!.email
+          : widget.email,
       'check': false,
       'practitioner': true,
       'Qualifications': qualificationsc.text,
