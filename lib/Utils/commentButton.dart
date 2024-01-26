@@ -11,9 +11,6 @@ class CommentButton extends StatefulWidget {
 class _CommentButtonState extends State<CommentButton> {
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: widget.onTap,
-      child: Icon(Icons.comment),
-    );
+    return IconButton(onPressed: widget.onTap, icon: Icon(Icons.comment));
   }
 }

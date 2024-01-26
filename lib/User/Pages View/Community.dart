@@ -4,6 +4,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:project_power/Utils/comm_post.dart';
 import 'package:project_power/Utils/my_texfield.dart';
+import 'package:project_power/helper/helper_merthods.dart';
 
 class community extends StatefulWidget {
   const community({super.key});
@@ -36,7 +37,7 @@ class _communityState extends State<community> {
                 children: [
                   Text(
                     'Community',
-                    style: TextStyle(fontSize: 24),
+                    style: TextStyle(fontSize: 24, color: Colors.teal),
                   ),
                   Row(
                     children: [
@@ -53,7 +54,7 @@ class _communityState extends State<community> {
                           // Clear text field after posting
                         },
                         icon: CircleAvatar(
-                          child: Icon(Icons.arrow_upward),
+                          child: Icon(Icons.arrow_downward),
                         ),
                       ),
                     ],
@@ -66,6 +67,7 @@ class _communityState extends State<community> {
                     builder: (context, snapshot) {
                       if (snapshot.hasData) {
                         return ListView.builder(
+                          physics: BouncingScrollPhysics(),
                           shrinkWrap: true,
                           itemCount: snapshot.data!.docs.length,
                           itemBuilder: (context, index) {
@@ -73,6 +75,7 @@ class _communityState extends State<community> {
                             return newCommunityPost(
                               message: thread['question'],
                               user: thread['userEmail'],
+                              time: formatDate(thread['Timestamp']),
                               postId: thread.id,
                               likes: List<String>.from(thread['likes'] ?? []),
                             );

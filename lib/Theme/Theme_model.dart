@@ -12,7 +12,7 @@ class Themeclass {
         secondary: Color(0xff8cd3d5), //containers background1
         onSecondaryContainer: Color(0xfff7a26b), //containers background2
         tertiary: Color(0xffc5aef6), //containers background3
-        onTertiary: Color(0xffff597d), //botton
+        onTertiary: Color(0xffff597d), //button
         surface: Color(0xff20a8a5), //active button
         onPrimary: Colors.black //text
         ),
