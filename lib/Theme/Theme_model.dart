@@ -5,8 +5,8 @@ class Themeclass {
   static ThemeData light = ThemeData(
     brightness: Brightness.light,
     colorScheme: const ColorScheme.light(
-        background: CupertinoColors.white, //background1
-        primary: Color(0xff7F3DFF),
+        background: Color(0xfff2f2f2), //background1
+        primary: Color(0xffff597d),
         onPrimaryContainer: Color(0xfffebece), //containers background4
         onSurface: Color(0xffffefff), //background2
         secondary: Color(0xff8cd3d5), //containers background1
@@ -21,10 +21,10 @@ class Themeclass {
   static ThemeData dark = ThemeData(
       brightness: Brightness.dark,
       colorScheme: const ColorScheme.dark(
-          background: Color(0xff212121), //background1
+          background: Color(0xff242424), //background1
           primary: Color(0xff7F3DFF),
           onPrimaryContainer: Color(0xfffebece), //containers background4
-          onSurface: Color(0xff2c2c2c), //background poped
+          onSurface: Color(0xff1b1b1b), //background poped
           secondary: Color(0xff8cd3d5), //containers background1
           onSecondaryContainer: Color(0xfff7a26b), //containers background2
           tertiary: Color(0xffc5aef6), //containers background3
