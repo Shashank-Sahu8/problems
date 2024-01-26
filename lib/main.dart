@@ -1,5 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:project_power/Notifications.dart';
 import 'package:project_power/Starting_Flow/2.Type_of_user.dart';
 import 'package:provider/provider.dart';
 import 'Auth_Files/firebase_options.dart';
@@ -8,6 +9,7 @@ import 'Theme/Theme.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await LocalNotifications.init();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   runApp(ChangeNotifierProvider(
       create: (context) => ThemeProvider(), child: MyApp()));

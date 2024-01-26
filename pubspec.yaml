@@ -68,6 +68,12 @@ dependencies:
   date_field: ^4.0.1
   datetime_picker_field_platform: ^0.0.1
   country_state_picker_plus: ^1.0.0+1
+  icons_launcher: ^2.1.7
+  syncfusion_flutter_pdf:
+  path_provider: ^2.1.2
+  open_file: ^3.3.2
+  flutter_email_sender:
+  random_avatar: ^0.0.8
 
 dev_dependencies:
   flutter_test:
