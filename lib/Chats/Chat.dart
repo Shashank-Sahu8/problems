@@ -105,7 +105,7 @@ class _chat_pageState extends State<chat_page> {
                       padding: const EdgeInsets.all(8.0),
                       child: Text(
                         data['message'],
-                        style: TextStyle(color: Colors.white),
+                        style: TextStyle(color: Colors.black),
                       ),
                     ),
                   ],
@@ -127,7 +127,7 @@ class _chat_pageState extends State<chat_page> {
                       padding: const EdgeInsets.all(8.0),
                       child: Text(
                         data['message'],
-                        style: TextStyle(color: Colors.white),
+                        style: TextStyle(color: Colors.black),
                       ),
                     ),
                   )

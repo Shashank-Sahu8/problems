@@ -11,6 +11,10 @@ class explore extends StatefulWidget {
 class _exploreState extends State<explore> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold();
+    return Scaffold(
+      body: Column(
+        children: [],
+      ),
+    );
   }
 }
