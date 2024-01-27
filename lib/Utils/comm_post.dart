@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -104,10 +106,66 @@ class _newCommunityPostState extends State<newCommunityPost> {
             ));
   }
 
+  OverlayEntry? _overlayEntry;
+  void _showLikeOverlay() {
+    RenderBox renderBox = context.findRenderObject() as RenderBox;
+    Offset position = renderBox.localToGlobal(Offset.zero);
+
+    // Get the center of the post container
+    double centerX = position.dx + renderBox.size.width / 2;
+    double centerY = position.dy + renderBox.size.height / 2;
+
+    // Create an OverlayEntry to show the filled heart icon
+    _overlayEntry = OverlayEntry(
+      builder: (context) => Positioned(
+        top: centerY - 30, // Adjust as needed
+        left: centerX - 30, // Adjust as needed
+        child: TweenAnimationBuilder(
+          duration: Duration(milliseconds: 300), // Adjust duration as needed
+          tween: Tween<double>(begin: 0.5, end: 1.0), // Opacity tween
+          builder: (context, opacity, child) {
+            return TweenAnimationBuilder(
+              duration:
+                  Duration(milliseconds: 300), // Adjust duration as needed
+              tween: Tween<double>(begin: 0.7, end: 1.0), // Scale tween
+              builder: (context, scale, child) {
+                return Transform.scale(
+                  scale: scale,
+                  child: Opacity(
+                    opacity: opacity,
+                    child: Icon(
+                      Icons.favorite,
+                      color: Colors.white,
+                      size: 60,
+                    ),
+                  ),
+                );
+              },
+            );
+          },
+        ),
+      ),
+    );
+
+    // Insert the OverlayEntry into the Overlay
+    Overlay.of(context).insert(_overlayEntry!);
+
+    // Schedule a timer to remove the overlay after 2 seconds
+    Timer(Duration(seconds: 1), () {
+      _overlayEntry?.remove();
+      _overlayEntry = null;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onDoubleTap: toggleLike,
+      onDoubleTap: () {
+        if (isLiked == false) {
+          toggleLike();
+        }
+        _showLikeOverlay();
+      },
       onTap: () {
         Navigator.push(
             context,
@@ -120,8 +178,9 @@ class _newCommunityPostState extends State<newCommunityPost> {
       },
       child: Container(
         decoration: BoxDecoration(
-            color: Colors.grey, borderRadius: BorderRadius.circular(8)),
-        margin: EdgeInsets.fromLTRB(25, 25, 25, 0),
+            color: Theme.of(context).colorScheme.surface,
+            borderRadius: BorderRadius.circular(8)),
+        margin: EdgeInsets.fromLTRB(20, 20, 20, 0),
         padding: EdgeInsets.all(20),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -130,7 +189,9 @@ class _newCommunityPostState extends State<newCommunityPost> {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Text(widget.message,
-                    style: TextStyle(color: Colors.white, fontSize: 20)),
+                    style: TextStyle(
+                        color: Theme.of(context).colorScheme.background,
+                        fontSize: 20)),
                 SizedBox(
                   height: 5,
                 ),
