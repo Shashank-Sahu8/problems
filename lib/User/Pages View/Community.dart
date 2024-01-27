@@ -20,6 +20,7 @@ void postMessage() async {
     'question': postController.text.toString(),
     'Timestamp': Timestamp.now(),
     'likes': [],
+    'isBookmarked': false,
   });
 }
 
