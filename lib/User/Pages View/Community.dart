@@ -23,6 +23,7 @@ void postMessage() async {
     'question': postController.text.toString(),
     'Timestamp': Timestamp.now(),
     'likes': [],
+    'isBookmarked': false,
   });
 }
 
@@ -96,25 +97,17 @@ class _communityState extends State<community> {
                     'Community',
                     style: TextStyle(fontSize: 24, color: Colors.teal),
                   ),
-                  Row(
-                    children: [
-                      Expanded(
-                        child: myTextField(
-                          controller: postController,
-                          hintText: 'Add new Thread',
-                        ),
-                      ),
-                      IconButton(
-                        onPressed: () {
-                          postMessage();
-                          postController.clear();
-                          // Clear text field after posting
-                        },
-                        icon: CircleAvatar(
-                          child: Icon(Icons.arrow_downward),
-                        ),
-                      ),
-                    ],
+                  Padding(
+                    padding: const EdgeInsets.all(20.0),
+                    child: myTextField(
+                      icon: Icon(Icons.arrow_downward),
+                      controller: postController,
+                      onTap: () {
+                        postMessage();
+                        postController.clear();
+                      },
+                      hintText: 'Add new Thread',
+                    ),
                   ),
                   StreamBuilder<QuerySnapshot>(
                     stream: FirebaseFirestore.instance

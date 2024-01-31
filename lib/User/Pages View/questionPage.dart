@@ -22,9 +22,49 @@ class questionPage extends StatefulWidget {
 }
 
 class _questionPageState extends State<questionPage> {
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getLikedBookmarked();
+  }
+
   final user = FirebaseAuth.instance.currentUser!;
   bool isLiked = false;
+  bool isBookmarked = false;
   final _commentTextController = TextEditingController();
+  Future<void> toggleBookmark(String postId) async {
+    DocumentReference postRef =
+        FirebaseFirestore.instance.collection('Threads').doc(postId);
+
+    try {
+      DocumentSnapshot postSnapshot = await postRef.get();
+
+      if (postSnapshot.exists) {
+        bool isCurrentlyBookmarked = postSnapshot['isBookmarked'];
+
+        // Print or use the current value as needed
+        print('Current isBookmarked value: $isCurrentlyBookmarked');
+
+        // Toggle the value
+        postRef.update({
+          'isBookmarked': !isCurrentlyBookmarked,
+        });
+
+        setState(() {
+          isBookmarked = !isBookmarked;
+        });
+
+        // Print or use the updated value as needed
+        print('Updated isBookmarked value: ${!isCurrentlyBookmarked}');
+      } else {
+        print('Post with ID $postId does not exist.');
+      }
+    } catch (e) {
+      print('Error fetching/posting data: $e');
+    }
+  }
+
   void toggleLike() {
     setState(() {
       isLiked = !isLiked;
@@ -43,7 +83,7 @@ class _questionPageState extends State<questionPage> {
   }
 
   void addComment(String commentText) {
-    if (commentText != '') {
+    if (_commentTextController.text != '') {
       FirebaseFirestore.instance
           .collection('Threads')
           .doc(widget.postId)
@@ -53,6 +93,26 @@ class _questionPageState extends State<questionPage> {
         'CommentedBy': user.email,
         'CommentTime': Timestamp.now(),
       });
+    }
+  }
+
+  Future<void> getLikedBookmarked() async {
+    DocumentReference postRef =
+        FirebaseFirestore.instance.collection('Threads').doc(widget.postId);
+
+    try {
+      DocumentSnapshot postSnapshot = await postRef.get();
+
+      if (postSnapshot.exists) {
+        setState(() {
+          isLiked = postSnapshot['likes'].contains(user.email);
+          isBookmarked = postSnapshot['isBookmarked'];
+        });
+      } else {
+        print('Post with ID ${widget.postId} does not exist.');
+      }
+    } catch (e) {
+      print('Error fetching data: $e');
     }
   }
 
@@ -101,10 +161,19 @@ class _questionPageState extends State<questionPage> {
         padding: const EdgeInsets.all(8.0),
         child: ListView(
           children: [
-            Container(
-              height: 300,
-              child: Card(
-                child: Center(child: Text(widget.question)),
+            Expanded(
+              child: Container(
+                child: Card(
+                  child: Center(
+                      child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 20, vertical: 50),
+                    child: Text(
+                      widget.question,
+                      style: TextStyle(fontSize: 36),
+                    ),
+                  )),
+                ),
               ),
             ),
             Row(
@@ -120,9 +189,11 @@ class _questionPageState extends State<questionPage> {
                   ],
                 ),
                 IconButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      toggleBookmark(widget.postId);
+                    },
                     icon: Icon(
-                      Icons.bookmark,
+                      isBookmarked ? Icons.bookmark : Icons.bookmark_border,
                       color: Colors.teal,
                     ))
               ],
