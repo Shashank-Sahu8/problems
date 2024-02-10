@@ -1,96 +1,89 @@
+import 'dart:convert';
+
+import 'package:dash_chat_2/dash_chat_2.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:icons_plus/icons_plus.dart';
+import 'package:http/http.dart' as http;
 
-import 'ai_call2.dart';
+class bot extends StatefulWidget {
+  const bot({super.key});
 
-class aicall1 extends StatelessWidget {
-  aicall1({super.key});
+  @override
+  State<bot> createState() => _botState();
+}
+
+class _botState extends State<bot> {
+  ChatUser me = ChatUser(id: '1', firstName: 'user');
+  ChatUser bot = ChatUser(id: '2', firstName: 'Gemini');
+
+  List<ChatMessage> allMessages = [];
+  List<ChatUser> typing = [];
+  final url =
+      "https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=AIzaSyBRZCjp1rPZuXUweF9ikVYknAofX6dj-j0";
+
+  final header = {'Content-Type': 'application/json'};
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    ChatMessage m1 = ChatMessage(
+        user: bot, createdAt: DateTime.now(), text: 'Hey! how can I help you');
+    allMessages.insert(0, m1);
+    setState(() {});
+  }
+
+  getdata(ChatMessage m) async {
+    typing.add(bot);
+    allMessages.insert(0, m);
+    setState(() {});
+    var data = {
+      "contents": [
+        {
+          "parts": [
+            {"text": m.text}
+          ]
+        }
+      ]
+    };
+    await http
+        .post(Uri.parse(url), headers: header, body: jsonEncode(data))
+        .then((value) {
+      if (value.statusCode == 200) {
+        var result = jsonDecode(value.body);
+        // print(result['candidates'][0]['content']['parts'][0]['text']);
+        ChatMessage mm = ChatMessage(
+            user: bot,
+            createdAt: DateTime.now(),
+            text: result['candidates'][0]['content']['parts'][0]['text']);
+        allMessages.insert(0, mm);
+        setState(() {});
+      } else
+        print("error");
+    }).catchError((e) {});
+    typing.remove(bot);
+    setState(() {});
+  }
 
   @override
   Widget build(BuildContext context) {
-    final textController = TextEditingController();
-    RxString result = ''.obs;
     return Scaffold(
+      body: DashChat(
+        typingUsers: typing,
+        currentUser: me,
+        onSend: (ChatMessage m) {
+          getdata(m);
+        },
+        messages: allMessages,
+      ),
       appBar: AppBar(
-        title: Text('AI Bot'),
+        title: Text("MediBot"),
+        automaticallyImplyLeading: true,
       ),
-      backgroundColor: Colors.white,
-      bottomNavigationBar: Container(
-          padding: MediaQuery.of(context).viewInsets,
-          color: Colors.grey[300],
-          child: Container(
-              padding: EdgeInsets.symmetric(vertical: 2),
-              margin: EdgeInsets.symmetric(horizontal: 5),
-              child: TextField(
-                decoration: InputDecoration(
-                  border: InputBorder.none,
-                  hintText: 'Type a message',
-                ),
-              ))),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Expanded(
-            child: Container(
-              color: Colors.green,
-            ),
-          ),
-
-          // child: TextField(
-          //   keyboardType: TextInputType.text,
-          //   controller: textController,
-          //   decoration: InputDecoration(
-          //       border: OutlineInputBorder(
-          //           borderRadius: BorderRadius.circular(10),
-          //           borderSide:
-          //               BorderSide(width: 1, color: Colors.black))),
-          // ),
-        ],
-      ),
-
-      // Container(
-      //   padding: const EdgeInsets.all(20),
-      //   child: SingleChildScrollView(
-      //     child: Column(
-      //       crossAxisAlignment: CrossAxisAlignment.start,
-      //       mainAxisAlignment: MainAxisAlignment.center,
-      //       children: [
-      //         TextField(
-      //           decoration: InputDecoration(
-      //               hintText: 'Type your question here',
-      //               border: OutlineInputBorder(
-      //                   borderSide: BorderSide(width: 1),
-      //                   borderRadius: BorderRadius.circular(8))),
-      //           keyboardType: TextInputType.text,
-      //           controller: textController,
-      //         ),
-      //         const SizedBox(height: 20),
-      //         ElevatedButton(
-      //           onPressed: () async {
-      //             result.value =
-      //                 await GeminiAPI.getGeminiData(textController.text);
-      //           },
-      //           child: const Text(
-      //             'generate',
-      //             style: TextStyle(color: Colors.black),
-      //           ),
-      //         ),
-      //         const SizedBox(height: 20),
-      //         Obx(() => Card(
-      //               color: Colors.grey[600],
-      //               child: Padding(
-      //                 padding: const EdgeInsets.all(8.0),
-      //                 child: Text(
-      //                   result.value,
-      //                   style: const TextStyle(color: Colors.black),
-      //                 ),
-      //               ),
-      //             )),
-      //       ],
-      //     ),
-      //   ),
-      // ),
     );
   }
 }
+
+// curl \
+// -H 'Content-Type: application/json' \
+// -d '{"contents":[{"parts":[{"text":"Write a story about a magic backpack"}]}]}' \
+// -X POST https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=YOUR_API_KEY

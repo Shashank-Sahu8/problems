@@ -97,7 +97,9 @@ class _presonal_detailsState extends State<presonal_details> {
                         Text(
                           "Date of Birth :",
                           style: GoogleFonts.inter(
-                              fontWeight: FontWeight.w500, fontSize: 16),
+                              color: Colors.black,
+                              fontWeight: FontWeight.w500,
+                              fontSize: 16),
                         ),
                         const SizedBox(
                           height: 8,
@@ -138,7 +140,9 @@ class _presonal_detailsState extends State<presonal_details> {
                         Text(
                           "Height(in cm) :",
                           style: GoogleFonts.inter(
-                              fontWeight: FontWeight.w500, fontSize: 16),
+                              color: Colors.black,
+                              fontWeight: FontWeight.w500,
+                              fontSize: 16),
                         ),
                         SizedBox(
                           height: 8,
@@ -176,7 +180,9 @@ class _presonal_detailsState extends State<presonal_details> {
                         Text(
                           "Weight(in Kg) :",
                           style: GoogleFonts.inter(
-                              fontWeight: FontWeight.w500, fontSize: 16),
+                              color: Colors.black,
+                              fontWeight: FontWeight.w500,
+                              fontSize: 16),
                         ),
                         SizedBox(
                           height: 8,
@@ -214,7 +220,9 @@ class _presonal_detailsState extends State<presonal_details> {
                         Text(
                           "Any Health Condition:",
                           style: GoogleFonts.inter(
-                              fontWeight: FontWeight.w500, fontSize: 16),
+                              color: Colors.black,
+                              fontWeight: FontWeight.w500,
+                              fontSize: 16),
                         ),
                         const SizedBox(
                           height: 8,

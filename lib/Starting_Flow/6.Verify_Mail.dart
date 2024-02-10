@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:project_power/Starting_Flow/witing_page2.o.dart';
 import 'package:project_power/User/Bottom_Navigation.dart';
 import 'package:project_power/Starting_Flow/4.Login.dart';
 import 'package:project_power/Practitioner/pr_homepage.dart';
@@ -102,7 +103,7 @@ class _verify_mailState extends State<verify_mail> {
 
   @override
   Widget build(BuildContext context) => isvar == true
-      ? route()
+      ? witing_page2()
       : Scaffold(
           appBar: AppBar(
             title: Text('verify Email'),

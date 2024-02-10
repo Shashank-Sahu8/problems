@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:project_power/Chats/chat_service.dart';
 
@@ -75,7 +74,10 @@ class _chat_pageState extends State<chat_page> {
             return Text('Error');
           }
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return CircularProgressIndicator();
+            return Center(
+                child: CircularProgressIndicator(
+              strokeWidth: 5,
+            ));
           }
           return ListView(
             children: snapshot.data!.docs
