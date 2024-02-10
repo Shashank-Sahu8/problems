@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:project_power/Chats/Chat.dart';
 
 import 'ai_call1.dart';
@@ -30,29 +31,40 @@ class _ChatInboxPageState extends State<ChatInboxPage> {
                       },
                       icon: Icon(
                         Icons.arrow_back_ios,
-                        color: Colors.black,
+                        color: Theme.of(context).colorScheme.onPrimary,
+                        size: 20,
                       )),
                   Text(
                     'Chats',
-                    style: TextStyle(fontSize: 30, color: Colors.black),
+                    style: TextStyle(
+                      fontSize: 30,
+                      color: Theme.of(context).colorScheme.onPrimary,
+                    ),
                   ),
                 ],
               ),
             ),
-            ListTile(
-              onTap: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => aicall1()));
-              },
-              title: Text(
-                'Medi bot',
-                style: TextStyle(color: Colors.black),
-              ),
-              trailing: Icon(
-                Icons.wb_incandescent_rounded,
-                color: Colors.red,
+            Container(
+              color: Theme.of(context).colorScheme.tertiary,
+              child: ListTile(
+                onTap: () {
+                  Navigator.push(
+                      context, MaterialPageRoute(builder: (context) => bot()));
+                },
+                title: Text(
+                  'Medi bot',
+                  style: GoogleFonts.inter(
+                      color: Theme.of(context).colorScheme.onPrimary,
+                      fontSize: 20,
+                      fontWeight: FontWeight.w600),
+                ),
+                trailing: Icon(
+                  Icons.wb_incandescent_rounded,
+                  color: Colors.red,
+                ),
               ),
             ),
+            //Divider(),
             _buildInbox(),
           ],
         ),
@@ -71,7 +83,7 @@ class _ChatInboxPageState extends State<ChatInboxPage> {
         if (snapshot.hasError) {
           return Text('Error');
         } else if (snapshot.connectionState == ConnectionState.waiting) {
-          return CircularProgressIndicator();
+          return Center(child: CircularProgressIndicator());
         }
         return Expanded(
           child: ListView.builder(
@@ -90,27 +102,37 @@ class _ChatInboxPageState extends State<ChatInboxPage> {
     Map<String, dynamic> data = document.data()! as Map<String, dynamic>;
 
     // Don't display the current user in the list
-    if (FirebaseAuth.instance.currentUser!.email != data['email']) {
-      return ListTile(
-        title: Text(
-          data['name'],
-          style: TextStyle(color: Colors.black),
-        ),
-        onTap: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (_) => chat_page(
-                recieverEmail: data['name'],
-                recieverUserId: data['id'],
-              ),
+    if (FirebaseAuth.instance.currentUser!.email != data['email'] &&
+        data['check'] == true) {
+      return Padding(
+        padding: const EdgeInsets.only(left: 15.0, right: 15, top: 15),
+        child: Container(
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10),
+              color: Theme.of(context).colorScheme.tertiary),
+          child: ListTile(
+            title: Text(
+              "Dr.  " + data['name'],
+              style: GoogleFonts.acme(
+                  color: Theme.of(context).colorScheme.onPrimary,
+                  fontSize: 20,
+                  fontWeight: FontWeight.w600),
             ),
-          );
-        },
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (_) => chat_page(
+                    recieverEmail: data['name'],
+                    recieverUserId: data['id'],
+                  ),
+                ),
+              );
+            },
+          ),
+        ),
       );
     }
-
-    // Return an empty container if the current user matches
     return Container();
   }
 }

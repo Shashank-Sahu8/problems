@@ -74,7 +74,10 @@ class _chat_pageState extends State<chat_page> {
             return Text('Error');
           }
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return CircularProgressIndicator();
+            return Center(
+                child: CircularProgressIndicator(
+              strokeWidth: 5,
+            ));
           }
           return ListView(
             children: snapshot.data!.docs

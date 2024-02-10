@@ -136,7 +136,7 @@ class _communityState extends State<community> {
                           child: Text('Error'),
                         );
                       }
-                      return CircularProgressIndicator();
+                      return Center(child: CircularProgressIndicator());
                     },
                   ),
                 ],
