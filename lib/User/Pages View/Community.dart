@@ -9,6 +9,8 @@ import 'package:project_power/Utils/comm_post.dart';
 import 'package:project_power/Utils/my_texfield.dart';
 import 'package:project_power/helper/helper_merthods.dart';
 
+import '../../Chats/chat_inbox_page.dart';
+
 class community extends StatefulWidget {
   const community({super.key});
 
@@ -86,6 +88,29 @@ class _communityState extends State<community> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        appBar: AppBar(
+          backgroundColor: Theme.of(context).colorScheme.background,
+          centerTitle: false,
+          title: Text(
+            'Community',
+            style: TextStyle(fontSize: 24, color: Colors.teal),
+          ),
+          automaticallyImplyLeading: false,
+          actions: [
+            IconButton(
+                onPressed: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (_) => ChatInboxPage()));
+                },
+                icon: CircleAvatar(
+                  backgroundColor: Theme.of(context).colorScheme.tertiary,
+                  child: Icon(
+                    Icons.message_outlined,
+                    color: Theme.of(context).colorScheme.surface,
+                  ),
+                ))
+          ],
+        ),
         body: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Expanded(
@@ -93,10 +118,6 @@ class _communityState extends State<community> {
               child: Column(
                 // crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  Text(
-                    'Community',
-                    style: TextStyle(fontSize: 24, color: Colors.teal),
-                  ),
                   Padding(
                     padding: const EdgeInsets.all(20.0),
                     child: myTextField(

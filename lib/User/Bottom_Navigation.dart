@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:email_launcher/email_launcher.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_switch/flutter_switch.dart';
@@ -6,8 +8,11 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:icons_plus/icons_plus.dart';
+import 'package:project_power/User/Pages%20View/pdf.dart';
 import 'package:provider/provider.dart';
 import 'package:random_avatar/random_avatar.dart';
+import 'package:syncfusion_flutter_pdf/pdf.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../Starting_Flow/8.If_Login_Or_not.dart';
 import '../Theme/Theme.dart';
 import 'Pages View/Calender.dart';
@@ -23,9 +28,11 @@ class bottomnav extends StatefulWidget {
   State<bottomnav> createState() => _homeState();
 }
 
-const pageindex = [home(), explore(), community(), calender(), profile()];
+const pageindex = [home(), explore(), community(), calender()];
 
 class _homeState extends State<bottomnav> {
+  Email email =
+      Email(bcc: [''], subject: 'Need Help', body: 'Thanks for this app');
   int page = 0;
   String svgCode = RandomAvatarString('womens');
   bool status = true;
@@ -74,10 +81,25 @@ class _homeState extends State<bottomnav> {
                         SizedBox(
                           width: 20,
                         ),
+                        // StreamBuilder(
+                        //     stream: FirebaseFirestore.instance.collection('User').doc('details').collection('data').doc(FirebaseAuth.instance.currentUser!.uid).get(),
+                        //     builder: builder)
+                        //StreamBuilder(
+                        //
+                        // builder: (context, snapshots) {
+                        //   if (snapshots.connectionState ==
+                        //       ConnectionState.waiting) {
+                        //     return const Center(
+                        //       child: CircularProgressIndicator(),
+                        //     );
+                        //   } else {
+                        //     final docs = snapshots.data?.data();
+                        //     final uid =
+                        //         FirebaseAuth.instance.currentUser!.uid;
                         Column(
                           children: [
                             Text(
-                              "App Name",
+                              'User Name',
                               style: TextStyle(
                                   color:
                                       Theme.of(context).colorScheme.onPrimary,
@@ -86,14 +108,19 @@ class _homeState extends State<bottomnav> {
                             ),
                             Text("mail")
                           ],
-                        ),
+                        )
+                        //   }
+                        //   ;
+                        // }),
                       ],
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
                         IconButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              _createPDF();
+                            },
                             icon: CircleAvatar(
                               radius: 15,
                               backgroundColor: Colors.grey,
@@ -222,26 +249,27 @@ class _homeState extends State<bottomnav> {
                 height: 65,
                 width: MediaQuery.of(context).size.width,
                 decoration: BoxDecoration(
-                    color: Theme.of(context).colorScheme.onSurface,
+                    color: Theme.of(context).colorScheme.tertiary,
                     borderRadius: BorderRadius.circular(10)),
-                child: Padding(
-                  padding: const EdgeInsets.all(14.0),
-                  child: Row(
-                    children: [
-                      CircleAvatar(
-                        child: Icon(Icons.logout_outlined),
-                      ),
-                      SizedBox(
-                        width: 15,
-                      ),
-                      Text(
-                        "Log Out",
-                        style: GoogleFonts.inter(
-                            color: Theme.of(context).colorScheme.onPrimary,
-                            fontSize: 18,
-                            fontWeight: FontWeight.w500),
-                      )
-                    ],
+                child: GestureDetector(
+                  onTap: () {},
+                  child: Padding(
+                    padding: const EdgeInsets.all(14.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          "Download details of user",
+                          style: GoogleFonts.inter(
+                              color: Theme.of(context).colorScheme.onPrimary,
+                              fontSize: 18,
+                              fontWeight: FontWeight.w500),
+                        ),
+                        CircleAvatar(
+                          child: Icon(Icons.download),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
@@ -255,26 +283,35 @@ class _homeState extends State<bottomnav> {
                 height: 65,
                 width: MediaQuery.of(context).size.width,
                 decoration: BoxDecoration(
-                    color: Theme.of(context).colorScheme.onSurface,
+                    color: Theme.of(context).colorScheme.tertiary,
                     borderRadius: BorderRadius.circular(10)),
-                child: Padding(
-                  padding: const EdgeInsets.all(14.0),
-                  child: Row(
-                    children: [
-                      CircleAvatar(
-                        child: Icon(Icons.logout_outlined),
-                      ),
-                      SizedBox(
-                        width: 15,
-                      ),
-                      Text(
-                        "Log Out",
-                        style: GoogleFonts.inter(
-                            color: Theme.of(context).colorScheme.onPrimary,
-                            fontSize: 18,
-                            fontWeight: FontWeight.w500),
-                      )
-                    ],
+                child: GestureDetector(
+                  onTap: () async {
+                    String email =
+                        Uri.encodeComponent("1projectpower1@gmail.com");
+                    String subject = Uri.encodeComponent("Need Help");
+                    String body = Uri.encodeComponent("Thanks for this app.");
+                    Uri mail =
+                        Uri.parse("mailto:$email?subject=$subject&body=$body");
+                    await launchUrl(mail);
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.all(14.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          "Contact Us",
+                          style: GoogleFonts.inter(
+                              color: Theme.of(context).colorScheme.onPrimary,
+                              fontSize: 18,
+                              fontWeight: FontWeight.w500),
+                        ),
+                        CircleAvatar(
+                          child: Icon(Icons.mail_lock_outlined),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
@@ -298,13 +335,24 @@ class _homeState extends State<bottomnav> {
               icon: Icon(Icons.groups_2), label: "Community"),
           BottomNavigationBarItem(
               icon: Icon(Icons.calendar_month), label: "Calender"),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.account_circle), label: "Profile"),
+          // BottomNavigationBarItem(
+          //     icon: Icon(Icons.account_circle), label: "Profile"),
         ],
       ),
       body: Center(
         child: pageindex[page],
       ),
     );
+  }
+
+  Future<void> _createPDF() async {
+    PdfDocument document = PdfDocument();
+    final page = document.pages.add();
+    page.graphics.drawString(
+        'This is pdf', PdfStandardFont(PdfFontFamily.helvetica, 30));
+    List<int> bytes = document.save() as List<int>;
+    document.dispose();
+
+    saveAndLAUNCH(bytes, 'Output.pdf');
   }
 }

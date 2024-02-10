@@ -74,11 +74,13 @@ dependencies:
   syncfusion_flutter_pdf:
   path_provider: ^2.1.2
   open_file: ^3.3.2
-  flutter_email_sender:
   random_avatar: ^0.0.8
   shimmer: ^3.0.0
   flutter_heatmap_calendar: ^1.0.5
   dash_chat_2: ^0.0.20
+  syncfusion_flutter_pdfviewer: ^24.2.4
+  scrollable_clean_calendar: ^1.4.1
+  email_launcher: ^1.1.1
 
 
 dev_dependencies:
