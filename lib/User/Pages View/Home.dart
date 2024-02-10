@@ -40,7 +40,7 @@ class _homeState extends State<home> {
                     MaterialPageRoute(builder: (_) => ChatInboxPage()));
               },
               icon: CircleAvatar(
-                backgroundColor: Theme.of(context).colorScheme.onSurface,
+                backgroundColor: Theme.of(context).colorScheme.tertiary,
                 child: Icon(
                   Icons.message_outlined,
                   color: Theme.of(context).colorScheme.surface,

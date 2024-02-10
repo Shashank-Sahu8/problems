@@ -133,7 +133,7 @@ class _homeState extends State<bottomnav> {
                 height: 65,
                 width: MediaQuery.of(context).size.width,
                 decoration: BoxDecoration(
-                    color: Theme.of(context).colorScheme.onSurface,
+                    color: Theme.of(context).colorScheme.tertiary,
                     borderRadius: BorderRadius.circular(10)),
                 child: Padding(
                   padding: const EdgeInsets.all(14.0),
@@ -164,7 +164,7 @@ class _homeState extends State<bottomnav> {
                 height: 65,
                 width: MediaQuery.of(context).size.width,
                 decoration: BoxDecoration(
-                    color: Theme.of(context).colorScheme.onSurface,
+                    color: Theme.of(context).colorScheme.tertiary,
                     borderRadius: BorderRadius.circular(10)),
                 child: Padding(
                   padding: const EdgeInsets.all(14.0),
