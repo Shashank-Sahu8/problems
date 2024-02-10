@@ -28,10 +28,13 @@ class _ChatInboxPageState extends State<ChatInboxPage> {
                       onPressed: () {
                         Navigator.pop(context);
                       },
-                      icon: Icon(Icons.arrow_back_ios)),
+                      icon: Icon(
+                        Icons.arrow_back_ios,
+                        color: Colors.black,
+                      )),
                   Text(
                     'Chats',
-                    style: TextStyle(fontSize: 30),
+                    style: TextStyle(fontSize: 30, color: Colors.black),
                   ),
                 ],
               ),
@@ -41,8 +44,14 @@ class _ChatInboxPageState extends State<ChatInboxPage> {
                 Navigator.push(context,
                     MaterialPageRoute(builder: (context) => aicall1()));
               },
-              title: Text('Medi bot'),
-              trailing: Icon(Icons.wb_incandescent_rounded),
+              title: Text(
+                'Medi bot',
+                style: TextStyle(color: Colors.black),
+              ),
+              trailing: Icon(
+                Icons.wb_incandescent_rounded,
+                color: Colors.red,
+              ),
             ),
             _buildInbox(),
           ],
@@ -85,6 +94,7 @@ class _ChatInboxPageState extends State<ChatInboxPage> {
       return ListTile(
         title: Text(
           data['name'],
+          style: TextStyle(color: Colors.black),
         ),
         onTap: () {
           Navigator.push(

@@ -94,7 +94,9 @@ class _practitioner_detailsState extends State<practitioner_details> {
                         Text(
                           "Qualifications :",
                           style: GoogleFonts.inter(
-                              fontWeight: FontWeight.w500, fontSize: 16),
+                              color: Colors.black,
+                              fontWeight: FontWeight.w500,
+                              fontSize: 16),
                         ),
                         SizedBox(
                           height: 8,
@@ -132,7 +134,9 @@ class _practitioner_detailsState extends State<practitioner_details> {
                         Text(
                           "Experience(in years) :",
                           style: GoogleFonts.inter(
-                              fontWeight: FontWeight.w500, fontSize: 16),
+                              color: Colors.black,
+                              fontWeight: FontWeight.w500,
+                              fontSize: 16),
                         ),
                         SizedBox(
                           height: 8,
@@ -170,7 +174,9 @@ class _practitioner_detailsState extends State<practitioner_details> {
                         Text(
                           "Currently working in :",
                           style: GoogleFonts.inter(
-                              fontWeight: FontWeight.w500, fontSize: 16),
+                              color: Colors.black,
+                              fontWeight: FontWeight.w500,
+                              fontSize: 16),
                         ),
                         const SizedBox(
                           height: 8,
@@ -208,7 +214,9 @@ class _practitioner_detailsState extends State<practitioner_details> {
                         Text(
                           "Location :",
                           style: GoogleFonts.inter(
-                              fontWeight: FontWeight.w500, fontSize: 16),
+                              color: Colors.black,
+                              fontWeight: FontWeight.w500,
+                              fontSize: 16),
                         ),
                         const SizedBox(
                           height: 8,
@@ -223,6 +231,7 @@ class _practitioner_detailsState extends State<practitioner_details> {
                             padding: const EdgeInsets.only(
                                 top: 4.0, bottom: 8.0, left: 8.0, right: 8.0),
                             child: CountryStatePickerPlus(
+                              style: TextStyle(color: Colors.black),
                               onCityChanged: (value) {
                                 result += ' $value';
                                 setState(() {});

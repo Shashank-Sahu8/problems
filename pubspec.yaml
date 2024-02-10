@@ -75,6 +75,7 @@ dependencies:
   flutter_email_sender:
   random_avatar: ^0.0.8
   shimmer: ^3.0.0
+  flutter_heatmap_calendar: ^1.0.5
 
 
 dev_dependencies:
