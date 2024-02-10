@@ -76,7 +76,13 @@ class _botState extends State<bot> {
         messages: allMessages,
       ),
       appBar: AppBar(
-        title: Text("MediBot"),
+        iconTheme:
+            IconThemeData(color: Theme.of(context).colorScheme.onPrimary),
+        backgroundColor: Theme.of(context).colorScheme.tertiary,
+        title: Text(
+          "MediBot",
+          style: TextStyle(color: Theme.of(context).colorScheme.onPrimary),
+        ),
         automaticallyImplyLeading: true,
       ),
     );
